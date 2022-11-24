@@ -1,8 +1,17 @@
 from User import UserName
+import pandas as pd
+
+
+Accounts = pd.read_csv("Accounts.csv")
+
+print(Accounts)
 
 print("Welcome to our Investment Game! If you want to sign up, press '0'. If you already have an account, press '1' to log in.")
 
 choice = int(input("Please make your choice: "))
+
+
+
 
 usernames_passwords = {'Luuk': 'Jonko'}
 
