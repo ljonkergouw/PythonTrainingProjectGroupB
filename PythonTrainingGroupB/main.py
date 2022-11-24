@@ -1,3 +1,5 @@
+from User import UserName
+
 print("Welcome to our Investment Game! If you want to sign up, press '0'. If you already have an account, press '1' to log in.")
 
 choice = int(input("Please make your choice: "))
@@ -16,6 +18,9 @@ if choice == 0:
     print("Registration completed")
 
     usernames_passwords[new_username] = new_password
+
+    User1 = UserName(user_id=new_username, password=new_password)
+    User1.welcome_message()
     # print(usernames_passwords)
 
 
@@ -29,11 +34,15 @@ elif choice == 1:
             existing_password = input("Please enter your password: ")
             if usernames_passwords[existing_username] == existing_password:
                 print("Log in succesful")
+                first_name = 'Luuk'
+                User1 = UserName(user_id=existing_username, password=existing_password)
+                User1.welcome_message()
                 break
             else:
                 print("You entered the wrong username/password combination. Please try again.")
         else:
             print("You didn't enter an existing username. Please try again ")
+
 
 
 
