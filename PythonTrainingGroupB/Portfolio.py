@@ -4,23 +4,45 @@ with open('Portfolios.json', 'r') as j:
     portfolios = json.loads(j.read())
 
 def get_portfolio(user_name):
-    if user_name in [portfolio['username'] for portfolio in portfolios]:
-        print([portfolio for portfolio in portfolios if portfolio['username'] == user_name][0]['portfolio'])
+    if user_name in [portfolio['username'] for portfolio in portfolios['users']]:
+        return [portfolio for portfolio in portfolios['users'] if portfolio['username'] == user_name][0]['portfolio']
     else:
         print('Portfolio does not exist')
 
-get_portfolio('luuk')
+def display_portfolio(user_name):
+    personal_portfolio = get_portfolio(user_name)
 
-def display_portfolio(self):
-    print(f"Portfolio displayed for user {self.user_id}:")
-    print(f'Your Portfolio contains {self.portfolio_count} stocks and your balance is €{self.balance}!')
+    print(f"Portfolio displayed for user {user_name}:")
+    print(f"Your Portfolio contains {len(personal_portfolio['portfolio'])} stocks and your balance is €{personal_portfolio['balance']}!")
 
-def add_money(self, amount):
+display_portfolio('luuk')
+
+def add_money(user_name, amount):
+    personal_portfolio = get_portfolio(user_name)
+    balance = personal_portfolio['balance']
     if type(amount) == float or type(amount) == int and amount > 0:
-        self.balance += amount
-        print(f'Your balance is now {self.balance}')
+        balance += amount
+        print(f'Your balance is now {balance}')
+        return balance
     else:
         print("The amount given is not a positive number!")
+
+def change_balance(user_name, portfolios, amount):
+    personal_portfolio = [portfolio for portfolio in portfolios['users'] if portfolio['username'] == user_name][0]
+
+    user_index = [portfolio['username'] for portfolio in portfolios['users']].index(user_name)
+
+    new_balance = add_money(user_name, amount)
+    personal_portfolio['portfolio']['balance'] = new_balance
+
+    portfolios[user_index] = personal_portfolio
+
+    with open('portfolios.json', 'w') as fp:
+        json.dump(portfolios, fp)
+
+
+
+change_balance("luuk", portfolios, 5000)
 
 def withdraw_money(self, amount):
     if amount > self.balance:
