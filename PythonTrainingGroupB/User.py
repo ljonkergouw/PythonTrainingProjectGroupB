@@ -1,4 +1,4 @@
-class UserName:
+class user_name:
 
     def __init__(self, user_id, password):
         self.user_id = user_id
@@ -10,6 +10,7 @@ class UserName:
     def create_portfolio(self):
         pass
 
+
 if __name__ == '__main__':
-    User1 = UserName('louk123', 'ABC123', 'Louk')
+    User1 = user_name('louk123', 'ABC123')
     User1.welcome_message()

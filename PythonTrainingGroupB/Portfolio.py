@@ -1,4 +1,4 @@
-class Portfolio:
+class portfolio_information:
 
     def __init__(self, user_id):
         self.user_id = user_id
@@ -31,7 +31,7 @@ class Portfolio:
 
 
 if __name__ == '__main__':
-    Port1 = Portfolio('Louk123')
+    Port1 = portfolio_information('Louk123')
     Port1.display_portfolio()
     Port1.add_money(-150)
     Port1.add_money(10000)
