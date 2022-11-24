@@ -1,6 +1,6 @@
 # My Project
 
-A simple project providing a useful base structure for python packages.
+Welcome to the Project: Investment Game program developed by Luuk Jonkergouw, Louk de Loijer, and Ronald van Oss
 
 ## Installation
 To install this project's package run:
