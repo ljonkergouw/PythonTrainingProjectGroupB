@@ -9,7 +9,7 @@ if choice == 0:
     while (new_username in usernames_passwords):
         print("User name already exists, please enter another username: ")
         new_username = input("Please enter a username: ")
-    new_password = input("Please enter a passwords: ")
+    new_password = input("Please enter a password: ")
 
     print("Thank you. In order to complete your registration, we need some additional details. Please enter your first name")
     first_name = input("First name: ")
@@ -17,6 +17,8 @@ if choice == 0:
 
     usernames_passwords[new_username] = new_password
     # print(usernames_passwords)
+
+
 
 elif choice == 1:
     print("Please enter you username.")
