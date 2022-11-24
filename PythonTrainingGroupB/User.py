@@ -1,3 +1,4 @@
+from Portfolio import portfolio_information
 class user_name:
 
     def __init__(self, user_id, password):
@@ -8,8 +9,7 @@ class user_name:
         print(f"Welcome {self.user_id}!\n\nThe user information of user_id {self.user_id}: No additional information")
 
     def create_portfolio(self):
-        pass
-
+        portfolio = portfolio_information(self.user_id)
 
 if __name__ == '__main__':
     User1 = user_name('louk123', 'ABC123')
