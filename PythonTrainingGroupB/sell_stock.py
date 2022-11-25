@@ -71,7 +71,8 @@ def sel_stock():
                 # update quantity
                 portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] = (
                             portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] - sell_quantity)
-
+                if portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] == 0:
+                    del portfolios['users'][user]['portfolio']['stocks'][company]
                 # display portfolio
                 print("your current portfolio is now")
                 print("\n")
