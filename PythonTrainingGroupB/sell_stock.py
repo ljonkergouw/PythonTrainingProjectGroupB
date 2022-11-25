@@ -6,6 +6,7 @@ def current_stock_price(company):
     stock_price = (float(price_data[recent_key[0]]['2. high']) + float(price_data[recent_key[0]]['3. low'])) / 2
     return stock_price
 
+
 def sel_stock():
     # display portfolio
     print("your current portfolio is")
@@ -24,7 +25,18 @@ def sel_stock():
 
     if company not in portfolios['users'][user]['portfolio']['stocks']:
         print("the company that you selected is not in your portfolio, please select another company")
-        sel_stock()
+
+        print("Do you want to continue?")
+        choice = input("please enter [y/n]")
+        print("\n")
+
+        while choice == "y":
+            sel_stock()
+
+        if choice == "n":
+            print("you will return to the menu")
+            print("\n")
+            # koppeling maken naar menu
 
     else:
 
@@ -73,6 +85,7 @@ def sel_stock():
                             portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] - sell_quantity)
                 if portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] == 0:
                     del portfolios['users'][user]['portfolio']['stocks'][company]
+
                 # display portfolio
                 print("your current portfolio is now")
                 print("\n")
@@ -81,7 +94,7 @@ def sel_stock():
                 print("company \t quantity \t total amount")
                 for key in portfolios['users'][user]['portfolio']['stocks']:
                     print(
-                        f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * 150}")  # * current_stock_price(company)}")
+                        f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * current_stock_price(company)}")
                 print("---------------------------------------------")
                 print("\n")
 
