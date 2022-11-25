@@ -57,12 +57,20 @@ def withdraw_money(user_name, portfolios, amount):
     else:
         print("The amount given is not a positive number!")
 
-def create_empty_portfolio(portfolios):
-    pass
+def create_empty_portfolio(portfolios, user_name):
+    if user_name not in [portfolio['username'] for portfolio in portfolios['users']]:
+        portfolios['users'].append({'username': user_name, 'portfolio':{'balance' : 0, 'stocks' : {}}})
+        with open('portfolios.json', 'w') as fp:
+            json.dump(portfolios, fp)
+        print('Empty portfolio created')
+        display_portfolio(user_name)
+    else:
+        print('This username already exists, please create a portfolio with a different username!')
 
 
 if __name__ == '__main__':
     portfolios = load_portfolios('Portfolios.json')
     add_money("luuk", portfolios, 5000)
     display_portfolio('luuk')
+    create_empty_portfolio(portfolios, "luuk")
     withdraw_money('luuk', portfolios, 50000)
