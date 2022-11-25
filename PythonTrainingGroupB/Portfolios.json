@@ -1,1 +1,1 @@
-{"users": [{"username": "louk123", "portfolio": {"balance": 500, "stocks": {"AAPL": 5, "IBM": 1}}}, {"username": "luuk", "portfolio": {"balance": 14500, "stocks": {"AAPL": 1, "IBM": 2}}}]}
+{"users": [{"username": "louk123", "portfolio": {"balance": 500, "stocks": {"AAPL": 5, "IBM": 1}}}, {"username": "luuk", "portfolio": {"balance": 14500, "stocks": {"AAPL": 1, "IBM": 2}}}, {"username": "Pieter", "portfolio": {"balance": 0, "stocks": {}}}]}
