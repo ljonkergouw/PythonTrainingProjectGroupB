@@ -19,8 +19,8 @@ def get_portfolio(user_name, portfolios):
     :param portfolios: the portfolios dictionary
     :return: a dictionary with only the portfolio dictionary items of a single user
     """
-    if user_name in [portfolio['username'] for portfolio in portfolios['users']]:
-        return [portfolio for portfolio in portfolios['users'] if portfolio['username'] == user_name][0]
+    if user_name in portfolios['users'].keys():
+        return portfolios['users'][user_name]
     else:
         print('Portfolio does not exist')
 def display_portfolio(user_name, portfolios):
@@ -46,7 +46,7 @@ def add_money(user_name, portfolios, amount):
     """
     personal_portfolio = get_portfolio(user_name, portfolios)
 
-    balance = get_balance(user_name)
+    balance = get_balance(user_name, portfolios)
 
     if type(amount) == float or type(amount) == int and amount > 0:
         new_balance = balance + amount
@@ -91,7 +91,7 @@ def withdraw_money(user_name, portfolios, amount):
     """
     personal_portfolio = get_portfolio(user_name, portfolios)
 
-    balance = get_balance(user_name)
+    balance = get_balance(user_name, portfolios)
 
     if amount > balance:
         print("You are trying to withdraw more money than is currently in your balance!")
@@ -128,8 +128,8 @@ def create_empty_portfolio(user_name, portfolios):
     :param user_name: the user_name of a user
     :param portfolios: the portfolios dictionary
     """
-    if user_name not in [portfolio['username'] for portfolio in portfolios['users']]:
-        portfolios['users'].append({'username': user_name, 'portfolio':{'balance' : 0, 'stocks' : {}}})
+    if user_name not in portfolios['users'].keys():
+        portfolios['users'][user_name] =  {'portfolio': {'balance': 0, 'stocks': {}}}
         with open('portfolios.json', 'w') as fp:
             json.dump(portfolios, fp)
         print('Empty portfolio created')
@@ -142,5 +142,5 @@ if __name__ == '__main__':
     portfolios = load_portfolios('Portfolios.json')
     add_money("luuk", portfolios, 5000)
     display_portfolio('luuk', portfolios)
-    create_empty_portfolio(portfolios, "luuk")
+    create_empty_portfolio("luuk", portfolios)
     withdraw_money('luuk', portfolios, 50000)
