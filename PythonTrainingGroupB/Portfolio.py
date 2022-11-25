@@ -116,7 +116,7 @@ def check_if_portfolio_exists(user_name, portfolios):
     :param user_name: the user_name of a user
     :param portfolios: the portfolios dictionary
     """
-    if user_name not in [portfolio['username'] for portfolio in portfolios['users']]:
+    if user_name not in portfolios['users'].keys():
         choice = input('It seems you do not have a portfolio, want to create one? [yes, no]')
         if choice == "yes":
             create_empty_portfolio(portfolios, user_name)
@@ -126,7 +126,7 @@ def check_if_portfolio_exists(user_name, portfolios):
             display_portfolio(user_name, portfolios)
 
 
-def create_empty_portfolio(user_name, portfolios):
+def create_empty_portfolio(portfolios, user_name):
     """
     create_empty_portfio creates an empty portfolio for a user when the user does not have a portfolio
     :param user_name: the user_name of a user

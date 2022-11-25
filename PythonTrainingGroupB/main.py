@@ -93,7 +93,7 @@ if __name__ == "__main__":
     accounts = load_accounts("accounts.json")
     user_name = login(accounts)
     portfolios = load_portfolios("Portfolios.json")
-    check_if_portfolio_exists(portfolios, user_name)
+    check_if_portfolio_exists(user_name, portfolios)
 
 
 
