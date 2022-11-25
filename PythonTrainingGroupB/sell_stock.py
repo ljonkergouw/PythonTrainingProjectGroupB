@@ -1,3 +1,4 @@
+import requests
 def current_stock_price(company):
     response = requests.get(f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={company}&interval=5min&outputsize=full&apikey=AD3GLM6F3A21OGWC")
     raw_data = response.json()
@@ -7,12 +8,13 @@ def current_stock_price(company):
     return stock_price
 
 
-def sel_stock():
+def sel_stock(user, portfolios):
     # display portfolio
     print("your current portfolio is")
     print("\n")
     print("---------------------------------------------")
     print("company \t quantity \t total amount")
+
     for key in portfolios['users'][user]['portfolio']['stocks']:
         print(
             f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * current_stock_price(key)}")
@@ -31,12 +33,12 @@ def sel_stock():
         print("\n")
 
         while choice == "y":
-            sel_stock()
+            sel_stock(user, portfolios)
 
         if choice == "n":
             print("you will return to the menu")
             print("\n")
-            # koppeling maken naar menu
+            investing_choice_menu(user, portfolios)
 
     else:
 
@@ -59,7 +61,7 @@ def sel_stock():
             print("\n")
 
             while choice == "y":
-                sel_stock()
+                sel_stock(user, portfolios)
             if choice == "n":
                 print("you will return to the menu")
                 print("\n")
@@ -74,7 +76,7 @@ def sel_stock():
             if choice == "y":
 
                 # update balance
-                new_balance = current_balance + (stock_price * stock_quantity)
+                new_balance = current_balance + (stock_price * sell_quantity)
                 current_balance += new_balance
                 print(
                     f"transaction SELL of {sell_quantity} shares {company} with a total amount of {stock_price * sell_quantity} EURO completed")  # here the currency needs to be added
@@ -103,7 +105,7 @@ def sel_stock():
                 choice = input("please enter [y/n]")
                 print("\n")
                 while choice == "y":
-                    sel_stock()
+                    sel_stock(user, portfolios)
                 if choice == "n":
                     print("you will return to the menu")
                     print("\n")
