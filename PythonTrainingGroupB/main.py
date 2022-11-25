@@ -1,6 +1,7 @@
 # import pandas as pd
 import json
 from Portfolio import *
+from currencies import *
 from menu_options import investing_choice_menu
 
 def load_accounts(path):
@@ -27,7 +28,7 @@ def add_new_account(path, accounts, new_username, new_password):
     with open(path, 'w') as fp:
         json.dump(accounts, fp)
 
-def login(accounts):
+def login(accounts, currencies):
     """
     login asks the user whether they want to sign up, or want to log in to their existing account.
 
@@ -40,13 +41,13 @@ def login(accounts):
     choice = int(input("Please make your choice: "))
 
     if choice == 0:
-        login = new_login(accounts)
+        login = new_login(accounts, currencies)
         return login
     elif choice == 1:
         login = existing_login(accounts)
         return login
 
-def new_login(accounts):
+def new_login(accounts, currencies):
     """"
     new_login asks the user for a username and password, which will be documented in the system.
 
@@ -61,6 +62,7 @@ def new_login(accounts):
     new_password = input("Please enter a password: ")
 
     add_new_account('accounts.json', accounts, new_username, new_password)
+    add_new_currency('currencies.json', currencies, new_username)
 
     print("Registration completed")
 
@@ -92,8 +94,10 @@ def existing_login(accounts):
 
 if __name__ == "__main__":
     accounts = load_accounts("accounts.json")
-    user_name = login(accounts)
+    currencies = load_currencies("currencies.json")
+    user_name = login(accounts, currencies)
     portfolios = load_portfolios("Portfolios.json")
+    print(user_name, portfolios)
     check_if_portfolio_exists(user_name, portfolios)
     investing_choice_menu(user_name, portfolios)
 

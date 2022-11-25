@@ -28,7 +28,7 @@ def new_currency():
     return valuta
 
 
-def add_new_currency(path, username, currencies):
+def add_new_currency(path, currencies, username):
     """"
     add_new_currency creates a new entry in the json database for the used currency
 
