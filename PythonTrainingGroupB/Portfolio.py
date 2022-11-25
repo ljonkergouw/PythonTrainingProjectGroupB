@@ -123,9 +123,7 @@ def check_if_portfolio_exists(user_name, portfolios):
         if choice == "yes":
             create_empty_portfolio(portfolios, user_name)
     else:
-        choice = input(f'Welcome back user {user_name}, want see how your portfolio is doing? [yes, no]')
-        if choice == "yes":
-            display_portfolio(user_name, portfolios)
+        print(f'Welcome back user {user_name}!')
 
 
 def create_empty_portfolio(portfolios, user_name):

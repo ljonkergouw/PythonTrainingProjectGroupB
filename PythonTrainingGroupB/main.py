@@ -1,6 +1,7 @@
 # import pandas as pd
 import json
 from Portfolio import *
+from menu_options import investing_choice_menu
 
 def load_accounts(path):
     """"
@@ -88,25 +89,6 @@ def existing_login(accounts):
                 print("You entered the wrong username/password combination. Please try again.")
         else:
             print("You didn't enter an existing username. Please try again ")
-
-def investing_choice_menu(user_name, portfolios):
-    print(f"Welcome in the main menu user {user_name}! please type any of the options in the terminal to perform the listed actions.")
-
-    print("========== Menu ==========")
-    print("=     view portfolio     =")
-    print("=     deposit  money     =")
-    print("=     withdraw money     =")
-    print("=       buy stocks       =")
-    print("=      sell stocks       =")
-    print("==========================")
-
-    choice = input('Please type in the menu option:')
-
-    if choice == "view portfolio":
-        display_portfolio(user_name, portfolios)
-    elif choice == "deposit money":
-        amount = int(input("How much money would you like to deposit to your balance?"))
-        add_money(user_name, portfolios, amount)
 
 if __name__ == "__main__":
     accounts = load_accounts("accounts.json")
