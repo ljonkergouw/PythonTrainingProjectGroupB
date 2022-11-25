@@ -23,11 +23,14 @@ def get_portfolio(user_name, portfolios):
         return portfolios['users'][user_name]
     else:
         print('Portfolio does not exist')
+
+
+
 def display_portfolio(user_name, portfolios):
     """
-    display_portfolio retrieves shows the balance, the number of stocks, and the stocks a user has
+    display_portfolio shows the balance, the number of stocks, and the stocks a user has
 
-    :param user_name: the user_name of a user
+    :param user_name: the username of a user
     :param portfolios: the portfolios dictionary
     """
     personal_portfolio = get_portfolio(user_name, portfolios)
@@ -53,7 +56,8 @@ def add_money(user_name, portfolios, amount):
         change_balance(user_name, portfolios, new_balance)
         print(f"{amount} is added to your initial balance of {balance} so your new balance is now {personal_portfolio['portfolio']['balance']}")
     else:
-        print("The amount given is not a positive number!")
+            print("The amount given is not a positive number!")
+
 
 def change_balance(user_name, portfolios, new_balance):
     """
