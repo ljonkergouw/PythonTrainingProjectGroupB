@@ -36,8 +36,12 @@ def display_portfolio(user_name, portfolios):
     personal_portfolio = get_portfolio(user_name, portfolios)
 
     print(f"Portfolio displayed for user {user_name}:")
-
-    print(f"Your Portfolio contains {len(personal_portfolio['portfolio'])} stocks and your balance is €{personal_portfolio['portfolio']['balance']}!")
+    print(f"Your Portfolio contains {len(personal_portfolio['portfolio']['stocks'])} stocks and your balance is €{personal_portfolio['portfolio']['balance']}!")
+    if len(personal_portfolio['portfolio']['stocks']) > 0:
+        print('Stock \t\t Price \t\t Quantiy')
+        print('----------------------------------')
+        for stock in personal_portfolio['portfolio']['stocks'].keys():
+            print(f"{stock} \t\t {personal_portfolio['portfolio']['stocks'][stock]['price']} \t {personal_portfolio['portfolio']['stocks'][stock]['quantity']}")
 
 def add_money(user_name, portfolios, amount):
     """
