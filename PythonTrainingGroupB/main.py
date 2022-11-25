@@ -56,7 +56,7 @@ def existing_login(accounts):
 if __name__ == "__main__":
     accounts = load_accounts("accounts.json")
     user_name = login(accounts)
-    portfolios = load_portfolios("portfolios.json")
+    portfolios = load_portfolios("Portfolios.json")
     check_if_portfolio_exists(portfolios, user_name)
 
 

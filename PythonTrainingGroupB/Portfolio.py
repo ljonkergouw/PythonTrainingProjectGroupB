@@ -83,6 +83,6 @@ def create_empty_portfolio(portfolios, user_name):
 if __name__ == '__main__':
     portfolios = load_portfolios('Portfolios.json')
     add_money("luuk", portfolios, 5000)
-    display_portfolio('luuk')
+    display_portfolio('luuk', portfolios)
     create_empty_portfolio(portfolios, "luuk")
     withdraw_money('luuk', portfolios, 50000)
