@@ -71,11 +71,9 @@ def change_balance(user_name, portfolios, new_balance):
     :param portfolios: the portfolios dictionary
     :param new_balance: the balance after money is added or withdrawn
     """
-    print(portfolios)
     personal_portfolio = get_portfolio(user_name, portfolios)
     personal_portfolio['portfolio']['balance'] = new_balance
 
-    print(portfolios)
     with open('portfolios.json', 'w') as fp:
         json.dump(portfolios, fp)
 
