@@ -1,5 +1,6 @@
 from Portfolio import *
 from sell_stock import sel_stock
+from buy_stock import buy_stock
 
 def investing_choice_menu(user_name, portfolios):
     print(f"Welcome in the main menu user {user_name}! please type in the number of a menu option in the terminal to perform the action.")
@@ -48,7 +49,7 @@ def investing_choice_menu(user_name, portfolios):
             print("not a valid answer, returning to main menu")
             investing_choice_menu(user_name, portfolios)
     elif int(choice) == 4:
-        print("This functionality currently does not exist")
+        buy_stock(user_name, portfolios)
         return_choice = input("want to return to the menu? [yes, no]")
         if return_choice == "yes":
             investing_choice_menu(user_name, portfolios)

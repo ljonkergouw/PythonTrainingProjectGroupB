@@ -1,22 +1,15 @@
-def buy_stock():
+from sell_stock import current_stock_price
+from Portfolio import display_portfolio
+import pandas as pd
+import json
+
+def buy_stock(user, portfolios):
     # load valid tickers
     table = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     df = table[0]
     valid_tickers = list(df.Symbol)
 
-    # An if-else statement which checks wheter a given stock is already in portfolio. If it is not currently in the portfolio of a specified user, this stock is added to the portfolio, otherwise the current stock quantity of
-    # the specified stock is updated.
-
-    # display portfolio
-    print("your current portfolio is")
-    print("\n")
-    print("---------------------------------------------")
-    print("company \t quantity \t total amount")
-    for key in portfolios['users'][user]['portfolio']['stocks']:
-        print(
-            f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * portfolios['users'][user]['portfolio']['stocks'][key]['price']}")
-    print("---------------------------------------------")
-    print("\n")
+    display_portfolio(user, portfolios)
 
     print("From which company do you want to buy shares?")
     company = input("please enter the company ticker")
@@ -31,7 +24,7 @@ def buy_stock():
             buy_stock()
         else:
             print("back to menu")
-            # back to menu
+            #investing_choice_menu(user, portfolios)
 
     else:
         buy_quantity = float(input("how many shares do you want to purchase?"))
@@ -69,6 +62,9 @@ def buy_stock():
                 # updating current balance and stock qty in portfolio
                 portfolios['users'][user]['portfolio']['balance'] -= new_balance
 
+                with open("Portfolios.json", 'w') as fp:
+                    json.dump(portfolios, fp)
+
                 # transaction receipt
                 print("transaction completed")
                 print("---------------------------------------------")
@@ -79,19 +75,12 @@ def buy_stock():
                 print("\n")
 
                 # current portfolio
-                print("your current portfolio is")
-                print("\n")
-                print("---------------------------------------------")
-                print("company \t quantity \t price \t total amount")
-                for key in portfolios['users'][user]['portfolio']['stocks']:
-                    print(
-                        f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {current_stock_price(key)} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * stock_price}")
-                print("---------------------------------------------")
-                print("\n")
+                print("Portfolio after transaction:")
+                display_portfolio(user, portfolios)
 
                 choice = input("Do you want to continue [y/n]?")
                 if choice == 'y':
-                    buy_stock()
+                    buy_stock(user, portfolios)
                 else:
                     print("back to menu")
 

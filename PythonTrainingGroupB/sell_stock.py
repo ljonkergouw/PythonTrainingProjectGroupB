@@ -1,4 +1,6 @@
 import requests
+import json
+from Portfolio import display_portfolio
 
 
 def current_stock_price(company):
@@ -14,15 +16,7 @@ def current_stock_price(company):
 def sel_stock(user, portfolios):
     # display portfolio
     print("your current portfolio is")
-    print("\n")
-    print("---------------------------------------------")
-    print("company \t quantity \t total amount")
-
-    for key in portfolios['users'][user]['portfolio']['stocks']:
-        print(
-            f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * current_stock_price(key)}")
-    print("---------------------------------------------")
-    print("\n")
+    display_portfolio(user, portfolios)
 
     print("From which company do you want to sell shares?")
     company = input("please enter the company ticker")
@@ -41,7 +35,7 @@ def sel_stock(user, portfolios):
         if choice == "n":
             print("you will return to the menu")
             print("\n")
-            investing_choice_menu(user, portfolios)
+            #investing_choice_menu(user, portfolios)
 
     else:
 
@@ -52,7 +46,7 @@ def sel_stock(user, portfolios):
         if sell_quantity <= 0:
             print("The amount you entered is invalid, please enter a valid number of shares.")
             print("Would you like to try again [y/n]")
-            buy_stock(user, portfolios)
+            sel_stock(user, portfolios)
 
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
@@ -96,17 +90,12 @@ def sel_stock(user, portfolios):
                 if portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] == 0:
                     del portfolios['users'][user]['portfolio']['stocks'][company]
 
-                # display portfolio
-                print("your current portfolio is now")
-                print("\n")
+                with open("Portfolios.json", 'w') as fp:
+                    json.dump(portfolios, fp)
 
-                print("---------------------------------------------")
-                print("company \t quantity \t total amount")
-                for key in portfolios['users'][user]['portfolio']['stocks']:
-                    print(
-                        f"{key} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity']} \t\t {portfolios['users'][user]['portfolio']['stocks'][key]['quantity'] * current_stock_price(company)}")
-                print("---------------------------------------------")
-                print("\n")
+                # display portfolio
+                print("your current portfolio after transaction is:")
+                display_portfolio(user, portfolios)
 
             elif choice == "n":
                 print("Do you want to continue?")
@@ -117,6 +106,5 @@ def sel_stock(user, portfolios):
                 if choice == "n":
                     print("you will return to the menu")
                     print("\n")
-                    # koppeling maken naar menu
 
     return portfolios
