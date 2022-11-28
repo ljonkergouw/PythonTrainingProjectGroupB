@@ -52,7 +52,8 @@ def buy_stock(user, portfolios):
     DAX = list(df3.Ticker)
 
     if company not in AEX or SP500 or DAX:
-        print(f"We currently do not support any transactions of {company}, we only support transaction of companies listed on the DAX, S&P500 & AEX")
+        print(
+            f"We currently do not support any transactions of {company}, we only support transaction of companies listed on the DAX, S&P500 & AEX")
         choice = input("Do you want to make another transation? [y/n]")
         if choice == 'y':
             buy_stock(user, portfolios)
