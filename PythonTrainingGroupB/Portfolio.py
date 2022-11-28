@@ -64,7 +64,6 @@ def display_portfolio(user_name, portfolios):
             for stock in personal_portfolio['portfolio']['stocks'].keys():
                 print(f"{stock} \t\t USD \t\t {personal_portfolio['portfolio']['stocks'][stock]['price']} \t\t {personal_portfolio['portfolio']['stocks'][stock]['quantity']}")
 
-    if
 def add_money(user_name, portfolios, amount):
     """
     with add_money a user can deposit money into the balance of the portfolio of the user
