@@ -1,6 +1,9 @@
 import requests
+
+
 def current_stock_price(company):
-    response = requests.get(f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={company}&interval=5min&outputsize=full&apikey=AD3GLM6F3A21OGWC")
+    response = requests.get(
+        f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={company}&interval=5min&outputsize=full&apikey=AD3GLM6F3A21OGWC")
     raw_data = response.json()
     price_data = raw_data['Time Series (5min)']
     recent_key = list(price_data.keys())[:1]
@@ -46,7 +49,12 @@ def sel_stock(user, portfolios):
         sell_quantity = float(input("please enter the amount of shares"))
         print("\n")
 
-        # vars to make code more readable
+        if sell_quantity <= 0:
+            print("The amount you entered is invalid, please enter a valid number of shares.")
+            print("Would you like to try again [y/n]")
+            buy_stock(user, portfolios)
+
+            # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
         stock_price = 150  # current_stock_price(company)
         current_balance = portfolios['users'][user]['portfolio']['balance']
@@ -84,7 +92,7 @@ def sel_stock(user, portfolios):
 
                 # update quantity
                 portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] = (
-                            portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] - sell_quantity)
+                        portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] - sell_quantity)
                 if portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] == 0:
                     del portfolios['users'][user]['portfolio']['stocks'][company]
 
@@ -110,4 +118,5 @@ def sel_stock(user, portfolios):
                     print("you will return to the menu")
                     print("\n")
                     # koppeling maken naar menu
+
     return portfolios
