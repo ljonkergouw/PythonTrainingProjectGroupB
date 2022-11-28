@@ -38,14 +38,16 @@ def login(accounts, currencies):
 
     print("Welcome to our Investment Game! If you want to sign up, press '0'. If you already have an account, press '1' to log in.")
 
-    choice = int(input("Please make your choice: "))
+    choice = input("Please make your choice: ")
+    while choice != "0" and choice != "1":
+        choice = input("Enter 0 or 1: ")
+        if choice == '0':
+            login = new_login(accounts, currencies)
+            return login
+        elif choice == '1':
+            login = existing_login(accounts)
+            return login
 
-    if choice == 0:
-        login = new_login(accounts, currencies)
-        return login
-    elif choice == 1:
-        login = existing_login(accounts)
-        return login
 
 def new_login(accounts, currencies):
     """"
