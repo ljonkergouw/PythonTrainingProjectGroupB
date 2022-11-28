@@ -24,7 +24,7 @@ def buy_current_stock_price(company):
     df.index = pd.DatetimeIndex(df.index)
 
     idx = df.index[df.index.get_loc(dt, method='nearest')]
-    stock_price = float(price_data[recent_key[0]]['2. high'])
+    stock_price = float(price_data[str(idx)]['2. high'])
 
     return stock_price
 
