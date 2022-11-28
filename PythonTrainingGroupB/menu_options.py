@@ -13,64 +13,64 @@ def investing_choice_menu(user_name, portfolios):
     print("=    6  exit game        =")
     print("==========================")
 
-    choice = input('Please type in the menu option number:')
+    choice = input('Please type in the menu option number: ')
 
     if int(choice) == 1:
         display_portfolio(user_name, portfolios)
-        return_choice = input("want to return to the menu? [yes, no]")
-        if return_choice == "yes":
+        return_choice = input("want to return to the menu? [y/n]: ")
+        if return_choice == "y":
             investing_choice_menu(user_name, portfolios)
-        elif return_choice == "no":
-            print("Exiting Investment Game, Thanks for playing")
+        elif return_choice == "n":
+            print("Exiting Investment Game, Thanks for playing.")
         else:
-            print("not a valid answer, returning to main menu")
+            print("not a valid answer, returning to main menu.")
             investing_choice_menu(user_name, portfolios)
     elif int(choice) == 2:
-        amount = int(input("How much money would you like to deposit to your balance?"))
+        amount = int(input("How much money would you like to deposit to your balance? "))
         add_money(user_name, portfolios, amount)
-        return_choice = input("want to return to the menu? [yes, no]")
-        if return_choice == "yes":
+        return_choice = input("want to return to the menu? [y/n]: ")
+        if return_choice == "y":
             investing_choice_menu(user_name, portfolios)
-        elif return_choice == "no":
-            print("Exiting Investment Game, Thanks for playing")
+        elif return_choice == "n":
+            print("Exiting Investment Game, Thanks for playing.")
         else:
-            print("not a valid answer, returning to main menu")
+            print("Not a valid answer, returning to main menu.")
             investing_choice_menu(user_name, portfolios)
     elif int(choice) == 3:
-        amount = int(input("How much money would you like to withdraw from your balance?"))
+        amount = int(input("How much money would you like to withdraw from your balance? "))
         withdraw_money(user_name, portfolios, amount)
-        return_choice = input("want to return to the menu? [yes, no]")
-        if return_choice == "yes":
+        return_choice = input("Want to return to the menu? [y/n]: ")
+        if return_choice == "y":
             investing_choice_menu(user_name, portfolios)
-        elif return_choice == "no":
-            print("Exiting Investment Game, Thanks for playing")
+        elif return_choice == "n":
+            print("Exiting Investment Game, Thanks for playing.")
         else:
-            print("not a valid answer, returning to main menu")
+            print("Not a valid answer, returning to main menu.")
             investing_choice_menu(user_name, portfolios)
     elif int(choice) == 4:
         buy_stock(user_name, portfolios)
-        return_choice = input("want to return to the menu? [yes, no]")
-        if return_choice == "yes":
+        return_choice = input("Want to return to the menu? [y/n]: ")
+        if return_choice == "y":
             investing_choice_menu(user_name, portfolios)
-        elif return_choice == "no":
-            print("Exiting Investment Game, Thanks for playing")
+        elif return_choice == "n":
+            print("Exiting Investment Game, Thanks for playing.")
         else:
-            print("not a valid answer, returning to main menu")
+            print("Not a valid answer, returning to main menu.")
             investing_choice_menu(user_name, portfolios)
     elif int(choice) == 5:
         sel_stock(user_name, portfolios)
-        return_choice = input("want to return to the menu? [yes, no]")
-        if return_choice == "yes":
+        return_choice = input("want to return to the menu? [y/n]: ")
+        if return_choice == "y":
             investing_choice_menu(user_name, portfolios)
-        elif return_choice == "no":
-            print("Exiting Investment Game, Thanks for playing")
+        elif return_choice == "n":
+            print("Exiting Investment Game, Thanks for playing.")
         else:
-            print("not a valid answer, returning to main menu")
+            print("Not a valid answer, returning to main menu.")
             investing_choice_menu(user_name, portfolios)
     elif int(choice) == 6:
-        print("Exiting Investment Game, Thanks for playing")
+        print("Exiting Investment Game, Thanks for playing.")
     else:
-        print("You did not type a valid menu choice")
-        print("You are now returning to the main menu")
+        print("You did not type a valid menu choice.")
+        print("You are now returning to the main menu.")
         investing_choice_menu(user_name, portfolios)
 
