@@ -12,23 +12,32 @@ def buy_stock(user, portfolios):
     display_portfolio(user, portfolios)
 
     print("From which company do you want to buy shares?")
-    company = input("please enter the company ticker")
+    company = input("Please enter the company ticker: ")
     print("\n")
 
     if company not in valid_tickers:
-        print("This is an invalid ticker")
+        print("This is an invalid ticker.")
         print("\n")
         print("")
-        choice = input("Do you want to try again? [y/n]")
+        choice = input("Do you want to try again? [y/n]: ")
         if choice == 'y':
             buy_stock()
         else:
-            print("back to menu")
-            #investing_choice_menu(user, portfolios)
+            print("Back to menu")
+            print("\n")
 
     else:
-        buy_quantity = float(input("how many shares do you want to purchase?"))
+        buy_quantity = float(input("How many shares do you want to purchase? "))
         print("\n")
+
+        if buy_quantity <= 0:
+            print("The amount you entered is invalid, please enter a valid number of shares.")
+            choice = input("Would you like to try again [y/n]: ")
+            if choice == 'y':
+                buy_stock(user, portfolios)
+            else:
+                print("Back to menu")
+
 
         stock_price = float(current_stock_price(company))
         current_balance = portfolios['users'][user]['portfolio']['balance']
@@ -36,15 +45,15 @@ def buy_stock(user, portfolios):
         if current_balance - (stock_price * buy_quantity) < 0:
             print(
                 f"your funds are insufficient. In order to complete this transaction, please increase your balance by {abs(current_balance - (stock_price * buy_quantity))}")
-            choice = input("do you want to make a deposit [y/n]?")
+            choice = input("Do you want to make a deposit [y/n]? ")
             if choice == 'y':
-                print("go to make a deposit")
+                print("Go make a deposit.")
             if choice == 'n':
-                print("go to menu")
+                print("Go to menu.")
         else:
             print(
                 f"Are you sure you want to buy {buy_quantity} of {company} for a total amount of {buy_quantity * stock_price}?")
-            choice = input("Please enter [y/n]")
+            choice = input("Please enter [y/n]: ")
             print("\n")
             if choice == 'n':
                 print("Ending: back to menu")
@@ -66,22 +75,24 @@ def buy_stock(user, portfolios):
                     json.dump(portfolios, fp)
 
                 # transaction receipt
-                print("transaction completed")
+                print("Transaction completed.")
                 print("---------------------------------------------")
-                print(f"shares bought: {buy_quantity}")
-                print(f"company: {company}")
-                print(f"total amount: {stock_price * buy_quantity}")
-                print(f"currency: EURO")  # here the currency needs to be added
+                print(f"Shares bought: {buy_quantity}")
+                print(f"Company: {company}")
+                print(f"Total amount: {stock_price * buy_quantity}")
+                print(f"Currency: EURO")  # here the currency needs to be added
                 print("\n")
 
                 # current portfolio
-                print("Portfolio after transaction:")
+                print("Portfolio after transaction: ")
                 display_portfolio(user, portfolios)
 
-                choice = input("Do you want to continue [y/n]?")
+                choice = input("Do you want to continue [y/n]? ")
                 if choice == 'y':
                     buy_stock(user, portfolios)
                 else:
-                    print("back to menu")
+                    print("Back to menu.")
+                    print("\n")
+
 
     return portfolios

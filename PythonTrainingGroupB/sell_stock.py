@@ -15,42 +15,44 @@ def current_stock_price(company):
 
 def sel_stock(user, portfolios):
     # display portfolio
-    print("your current portfolio is")
+    print("your current portfolio is: ")
     display_portfolio(user, portfolios)
 
     print("From which company do you want to sell shares?")
-    company = input("please enter the company ticker")
+    company = input("Please enter the company ticker: ")
     print("\n")
 
     if company not in portfolios['users'][user]['portfolio']['stocks']:
-        print("the company that you selected is not in your portfolio, please select another company")
+        print("The company that you selected is not in your portfolio, please select another company.")
 
         print("Do you want to continue?")
-        choice = input("please enter [y/n]")
+        choice = input("Please enter [y/n]: ")
         print("\n")
 
         while choice == "y":
             sel_stock(user, portfolios)
 
         if choice == "n":
-            print("you will return to the menu")
+            print("You will return to the menu.")
             print("\n")
-            #investing_choice_menu(user, portfolios)
 
     else:
 
         print("How many shares do you want to sell?")
-        sell_quantity = float(input("please enter the amount of shares"))
+        sell_quantity = float(input("please enter the amount of shares: "))
         print("\n")
 
         if sell_quantity <= 0:
             print("The amount you entered is invalid, please enter a valid number of shares.")
-            print("Would you like to try again [y/n]")
-            sel_stock(user, portfolios)
+            choice = input("Would you like to try again [y/n]: ")
+            if choice == 'y':
+                sel_stock(user, portfolios)
+            else:
+                print("Back to menu.")
 
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
-        stock_price = 150  # current_stock_price(company)
+        stock_price = current_stock_price(company)
         current_balance = portfolios['users'][user]['portfolio']['balance']
 
         if sell_quantity > current_quantity:
@@ -59,20 +61,19 @@ def sel_stock(user, portfolios):
             print("\n")
 
             print("Do you want to continue?")
-            choice = input("please enter [y/n]")
+            choice = input("please enter [y/n]: ")
             print("\n")
 
             while choice == "y":
                 sel_stock(user, portfolios)
             if choice == "n":
-                print("you will return to the menu")
+                print("You will return to the menu.")
                 print("\n")
-                # koppeling maken naar menu
 
         if sell_quantity <= current_quantity:
             print(
                 f"thank you, are you sure that you want to sell {sell_quantity} of {company} at the current price of {stock_price}?")
-            choice = input("please confirm [y/n]")
+            choice = input("Please confirm [y/n]: ")
             print("\n")
 
             if choice == "y":
@@ -94,17 +95,17 @@ def sel_stock(user, portfolios):
                     json.dump(portfolios, fp)
 
                 # display portfolio
-                print("your current portfolio after transaction is:")
+                print("Your current portfolio after transaction is: ")
                 display_portfolio(user, portfolios)
 
             elif choice == "n":
                 print("Do you want to continue?")
-                choice = input("please enter [y/n]")
+                choice = input("please enter [y/n]: ")
                 print("\n")
                 while choice == "y":
                     sel_stock(user, portfolios)
                 if choice == "n":
-                    print("you will return to the menu")
+                    print("You will return to the menu.")
                     print("\n")
 
     return portfolios
