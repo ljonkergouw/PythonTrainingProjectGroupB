@@ -9,11 +9,11 @@ def search(search_input):
     return data
 
 def print_search_results(results):
-    print(f"symbol name\t\t\t\t\t type\t region\t marketOpen\t marketClose\t timezone\t currency\t")
+    print(f"symbol\t name\t\t\t\t\t type\t region\t marketOpen\t marketClose\t timezone\t currency\t")
     print("-----------------------------------------------------------")
     for i in range(len(results['bestMatches'])):
         result = results['bestMatches'][i]
-        print(f"{result['1. symbol']:<10} {result['2. name']:<75}{result['3. type']:<25}{result['4. region']:<20}{result['7. timezone']:<20}{result['8. currency']:<20}")
+        print(f"{result['1. symbol']:<10} {result['2. name']:<60}{result['3. type']:<25}{result['4. region']:<20}{result['5. marketOpen']:<10}{result['6. marketClose']:<10}{result['7. timezone']:<20}{result['8. currency']:<20}")
 
 
 if __name__ == "__main__":
