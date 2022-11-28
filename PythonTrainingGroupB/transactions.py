@@ -21,7 +21,7 @@ def buy_current_stock_price(company):
     response = requests.get(
         f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={company}&interval=5min&outputsize=full&apikey=AD3GLM6F3A21OGWC")
     if response.status_code != 200:
-        raise ValueError("Could not retrieve data, code:", response.status_code)
+        raise ValueError("Could not retrieve data, code: ", response.status_code)
     raw_data = response.json()
     data = raw_data['Time Series (5min)']
     df = pd.DataFrame(data).T.apply(pd.to_numeric)
@@ -36,19 +36,19 @@ def buy_stock(user, portfolios):
     display_portfolio(user, portfolios)
 
     print("From which company do you want to buy shares?")
-    company = input("please enter the company ticker")
+    company = input("Please enter the company ticker: ")
     print("\n")
 
-    buy_quantity = float(input("how many shares do you want to purchase?"))
+    buy_quantity = float(input("How many shares do you want to purchase? "))
     print("\n")
 
     if buy_quantity <= 0:
         print("The amount you entered is invalid, please enter a valid number of shares.")
-        choice = input("Would you like to try again [y/n]")
+        choice = input("Would you like to try again [y/n]: ")
         if choice == 'y':
             buy_stock(user, portfolios)
         else:
-            print("back to menu")
+            print("Back to menu.")
 
     stock_price = round(float(buy_current_stock_price(company)), 2)
     current_balance = portfolios['users'][user]['portfolio']['balance']
@@ -60,19 +60,19 @@ def buy_stock(user, portfolios):
 
         if current_balance - (stock_price * buy_quantity) < 0:
             print(
-                f"your funds are insufficient. In order to complete this transaction, please increase your balance by {abs(current_balance - (stock_price * buy_quantity))}")
-            choice = input("do you want to make a deposit [y/n]?")
+                f"Your funds are insufficient. In order to complete this transaction, please increase your balance by {abs(current_balance - (stock_price * buy_quantity))}")
+            choice = input("Do you want to make a deposit [y/n]? ")
             if choice == 'y':
-                print("go to make a deposit")
+                print("Go make a deposit.")
             if choice == 'n':
-                print("go to menu")
+                print("Go to menu.")
         else:
             print(
                 f"Are you sure you want to buy {buy_quantity} of {company} for a total amount of {buy_quantity * stock_price}?")
-            choice = input("Please enter [y/n]")
+            choice = input("Please enter [y/n]: ")
             print("\n")
             if choice == 'n':
-                print("Ending: back to menu")
+                print("Ending: back to menu.")
                 print("\n")
             if choice == 'y':
                 new_balance = portfolios['users'][user]['portfolio']['balance'] - (buy_quantity * stock_price)
@@ -91,23 +91,23 @@ def buy_stock(user, portfolios):
                     json.dump(portfolios, fp)
 
                 # transaction receipt
-                print("transaction completed")
+                print("Transaction completed.")
                 print("---------------------------------------------")
-                print(f"shares bought: {buy_quantity}")
-                print(f"company: {company}")
-                print(f"total amount: {stock_price * buy_quantity}")
-                print(f"currency: EURO")  # here the currency needs to be added
+                print(f"Shares bought: {buy_quantity}")
+                print(f"Company: {company}")
+                print(f"Total amount: {stock_price * buy_quantity}")
+                print(f"Currency: EUR")  # here the currency needs to be added
                 print("\n")
 
                 # current portfolio
-                print("Portfolio after transaction:")
+                print("Portfolio after transaction: ")
                 display_portfolio(user, portfolios)
 
-                choice = input("Do you want to continue [y/n]?")
+                choice = input("Do you want to continue [y/n]? ")
                 if choice == 'y':
                     buy_stock(user, portfolios)
                 else:
-                    print("back to menu")
+                    print("Back to menu.")
                     print("\n")
 
 
@@ -141,40 +141,40 @@ def sell_current_stock_price(company):
 
 def sel_stock(user, portfolios):
     # display portfolio
-    print("your current portfolio is")
+    print("Your current portfolio is: ")
     display_portfolio(user, portfolios)
 
     print("From which company do you want to sell shares?")
-    company = input("please enter the company ticker")
+    company = input("Please enter the company ticker: ")
     print("\n")
 
     if company not in portfolios['users'][user]['portfolio']['stocks']:
-        print("the company that you selected is not in your portfolio, please select another company")
+        print("The company that you selected is not in your portfolio, please select another company.")
 
         print("Do you want to continue?")
-        choice = input("please enter [y/n]")
+        choice = input("Please enter [y/n]: ")
         print("\n")
 
         while choice == "y":
             sel_stock(user, portfolios)
 
         if choice == "n":
-            print("you will return to the menu")
+            print("You will return to the menu.")
             print("\n")
 
     else:
 
         print("How many shares do you want to sell?")
-        sell_quantity = float(input("please enter the amount of shares"))
+        sell_quantity = float(input("Please enter the amount of shares: "))
         print("\n")
 
         if sell_quantity <= 0:
             print("The amount you entered is invalid, please enter a valid number of shares.")
-            choice = input("Would you like to try again [y/n]")
+            choice = input("Would you like to try again [y/n]: ")
             if choice == 'y':
                 sel_stock(user, portfolios)
             else:
-                print("back to menu")
+                print("Back to menu.")
 
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
@@ -189,19 +189,19 @@ def sel_stock(user, portfolios):
                 print("\n")
 
                 print("Do you want to continue?")
-                choice = input("please enter [y/n]")
+                choice = input("Please enter [y/n]: ")
                 print("\n")
 
                 while choice == "y":
                     sel_stock(user, portfolios)
                 if choice == "n":
-                    print("you will return to the menu")
+                    print("You will return to the menu")
                     print("\n")
 
             if sell_quantity <= current_quantity:
                 print(
                     f"thank you, are you sure that you want to sell {sell_quantity} of {company} at the current price of {stock_price}?")
-                choice = input("please confirm [y/n]")
+                choice = input("please confirm [y/n]: ")
                 print("\n")
 
                 if choice == "y":
@@ -210,7 +210,7 @@ def sel_stock(user, portfolios):
                     new_balance = current_balance + (stock_price * sell_quantity)
                     current_balance += new_balance
                     print(
-                        f"transaction SELL of {sell_quantity} shares {company} with a total amount of {stock_price * sell_quantity} EURO completed")  # here the currency needs to be added
+                        f"Transaction SELL of {sell_quantity} shares {company} with a total amount of {stock_price * sell_quantity} EURO completed")  # here the currency needs to be added
                     print("\n")
 
                     # update quantity
@@ -223,17 +223,17 @@ def sel_stock(user, portfolios):
                         json.dump(portfolios, fp)
 
                     # display portfolio
-                    print("your current portfolio after transaction is:")
+                    print("Your current portfolio after transaction is: ")
                     display_portfolio(user, portfolios)
 
                 elif choice == "n":
                     print("Do you want to continue?")
-                    choice = input("please enter [y/n]")
+                    choice = input("please enter [y/n]: ")
                     print("\n")
                     while choice == "y":
                         sel_stock(user, portfolios)
                     if choice == "n":
-                        print("you will return to the menu")
+                        print("You will return to the menu.")
                         print("\n")
 
     return portfolios
