@@ -1,6 +1,5 @@
 from Portfolio import *
-from sell_stock import sel_stock
-from buy_stock import buy_stock
+from transactions import *
 
 def investing_choice_menu(user_name, portfolios):
     print(f"Welcome in the main menu user {user_name}! please type in the number of a menu option in the terminal to perform the action.")
