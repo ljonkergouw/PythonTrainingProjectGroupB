@@ -13,16 +13,28 @@ def print_search_results(results):
     print("-----------------------------------------------------------")
     for i in range(len(results['bestMatches'])):
         result = results['bestMatches'][i]
-        print(f"{result['1. symbol']:<10} {result['2. name']:<60}{result['3. type']:<25}{result['4. region']:<20}{result['5. marketOpen']:<10}{result['6. marketClose']:<10}{result['7. timezone']:<20}{result['8. currency']:<20}")
+        print(f"{result['1. symbol']:<10} {result['2. name']:<75}{result['3. type']:<25}{result['4. region']:<20}{result['5. marketOpen']:<10}{result['6. marketClose']:<10}{result['7. timezone']:<20}{result['8. currency']:<20}")
 
 
 def stock_info(symbol, key):
     #url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={symbol}&apikey={key}'
-    url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={key}'
+    url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={str(symbol).replace(".", "-")}&apikey={key}'
+
     r = requests.get(url)
     data = r.json()
-    print(data)
 
+    print('Info:')
+    print(f"{'Symbol':<10} {'AssetType':<20} {'Name':<25}  {'Exchange':<10} {'Currency':<10} {'Country':<15} {'Industry':<50} {'DividendPerShare':<10}")
+    print(f"{data['Symbol']:<10} {data['AssetType']:<20} {data['Name']:<25}  {data['Exchange']:<10} {data['Currency']:<10} {data['Country']:<15} {data['Industry']:<50} {data['DividendPerShare']:<10}")
+
+
+def display_price_chart(symbol, key):
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={symbol}&apikey={key}'
+
+    r = requests.get(url)
+    data = r.json()
+
+    print(data)
 
 
 if __name__ == "__main__":
@@ -32,8 +44,7 @@ if __name__ == "__main__":
     print_search_results(results)
     second_search = input("Of which of these stocks would you like to know more information? Please provide the ticker")
     stock_info(second_search, key)
-    currency = get_currency(second_search, key)
-    print(currency)
+    display_price_chart(second_search, key)
 
 
 

@@ -24,6 +24,12 @@ def get_portfolio(user_name, portfolios):
     else:
         print('Portfolio does not exist')
 
+def get_user_currency(user_name):
+    with open('currencies.json', 'r') as j:
+        user_currencies = json.loads(j.read())
+
+    return user_currencies[user_name]
+
 
 
 def display_portfolio(user_name, portfolios):
@@ -146,5 +152,7 @@ if __name__ == '__main__':
     portfolios = load_portfolios('Portfolios.json')
     add_money("luuk", portfolios, 5000)
     display_portfolio('luuk', portfolios)
-    create_empty_portfolio("luuk", portfolios)
-    withdraw_money('luuk', portfolios, 50000)
+    #create_empty_portfolio("luuk", portfolios)
+    #withdraw_money('luuk', portfolios, 50000)
+    user_currency = get_user_currency('luuk')
+    print(user_currency)
