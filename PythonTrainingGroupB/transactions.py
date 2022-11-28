@@ -3,7 +3,7 @@ import pandas as pd
 import json
 from currencies import get_currency
 import requests
-from Portfolio import display_portfolio, get_balance
+from Portfolio import display_portfolio, change_balance
 from dateutil import parser
 import datetime
 import warnings
@@ -143,8 +143,6 @@ def buy_stock(user, portfolios):
 
     return portfolios
 
-
-
 def sell_current_stock_price(company):
     dt = datetime.datetime.now()
     dt = str(dt)
@@ -208,12 +206,12 @@ def sel_stock(user, portfolios):
 
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
-        stock_price = round(float(sell_current_stock_price(company)), 2)
-        current_balance = portfolios['users'][user]['portfolio']['balance']
 
+        current_balance = portfolios['users'][user]['portfolio']['balance']
+        stock_price = round(float(sell_current_stock_price(company)), 4)
         currency = get_currency(company, "EMFE4N5TBX48Y6W5")
         if currency == 'EUR':
-            stock_price = stock_price / 1.04
+            pass
         else:
             if sell_quantity > current_quantity:
                 print(
@@ -237,10 +235,11 @@ def sel_stock(user, portfolios):
                 print("\n")
 
                 if choice == "y":
+                    test = "a"
 
                     # update balance
-                    balance = get_balance(user, portfolios)
-                    balance = current_balance + (stock_price * sell_quantity)
+                    balance = portfolios['users'][user]['portfolio']['balance'] + (stock_price * sell_quantity)
+                    change_balance(user, portfolios, balance)
                     print(
                         f"Transaction SELL of {sell_quantity} shares {company} with a total amount of {stock_price * sell_quantity} EURO completed")  # here the currency needs to be added
                     print("\n")
