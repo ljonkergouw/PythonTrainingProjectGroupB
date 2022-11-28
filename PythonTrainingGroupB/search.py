@@ -1,7 +1,8 @@
 import requests
 import csv
 import pandas as pd
-import finplot as fplt
+import seaborn as sns
+import matplotlib.pyplot as plt
 key = "EMFE4N5TBX48Y6W5"
 
 def search(search_input):
@@ -43,9 +44,9 @@ def display_price_chart(symbol, key):
             #print(row)
 
         headers = my_list.pop(0)
-        df = pd.DataFrame(my_list, columns=headers)
-        fplt.candlestick_ochl(df[['time','open','close','high','low']])
-
+        df = pd.DataFrame(my_list, columns=headers).head(50)
+        sns.lineplot(data=df, x="time", y="high")
+        plt.show()
 
 
 if __name__ == "__main__":
