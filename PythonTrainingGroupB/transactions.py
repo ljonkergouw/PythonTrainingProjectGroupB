@@ -3,7 +3,7 @@ import pandas as pd
 import json
 from currencies import get_currency
 import requests
-from Portfolio import display_portfolio
+from Portfolio import display_portfolio, get_balance
 from dateutil import parser
 import datetime
 import warnings
@@ -61,8 +61,16 @@ def buy_stock(user, portfolios):
             print("Returning to menu")
     else:
 
-        buy_quantity = float(input("How many shares do you want to purchase? "))
+        buy_quantity = input("How many shares do you want to purchase? ")
+
+        try:
+            float(buy_quantity)
+        except ValueError:
+            print("This is not a number")
+            buy_quantity = input("Enter a number ")
         print("\n")
+
+        buy_quantity = float(buy_quantity)
 
         if buy_quantity <= 0:
             print("The amount you entered is invalid, please enter a valid number of shares.")
@@ -107,7 +115,7 @@ def buy_stock(user, portfolios):
                                                                                      'price': stock_price}
 
                     # updating current balance and stock qty in portfolio
-                    portfolios['users'][user]['portfolio']['balance'] -= new_balance
+                    portfolios['users'][user]['portfolio']['balance'] = round(new_balance, 4)
 
                     with open("Portfolios.json", 'w') as fp:
                         json.dump(portfolios, fp)
@@ -202,6 +210,8 @@ def sel_stock(user, portfolios):
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
         stock_price = round(float(sell_current_stock_price(company)), 2)
         current_balance = portfolios['users'][user]['portfolio']['balance']
+
+        currency = get_currency(company, "EMFE4N5TBX48Y6W5")
         if currency == 'EUR':
             stock_price = stock_price / 1.04
         else:
@@ -229,8 +239,8 @@ def sel_stock(user, portfolios):
                 if choice == "y":
 
                     # update balance
-                    new_balance = current_balance + (stock_price * sell_quantity)
-                    current_balance += new_balance
+                    balance = get_balance(user, portfolios)
+                    balance = current_balance + (stock_price * sell_quantity)
                     print(
                         f"Transaction SELL of {sell_quantity} shares {company} with a total amount of {stock_price * sell_quantity} EURO completed")  # here the currency needs to be added
                     print("\n")

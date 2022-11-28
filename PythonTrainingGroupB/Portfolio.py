@@ -43,26 +43,24 @@ def display_portfolio(user_name, portfolios):
 
     if get_user_currency(user_name) == 'EUR':
 
-        print('Europath')
-
         print(f"Portfolio displayed for user {user_name}:")
         print(f"Your Portfolio contains {len(personal_portfolio['portfolio']['stocks'])} stocks and your balance is €{round(personal_portfolio['portfolio']['balance'], 4)}!")
         if len(personal_portfolio['portfolio']['stocks']) > 0:
-            print('Stock \t\t Currency \t Price \t\t\t Quantity')
-            print('----------------------------------------------------------------------------')
+            print('Stock \t\t Currency \t Price \t\t\t Quantity \t Total Value')
+            print('----------------------------------------------------------------------------------------------------------------------------------')
             for stock in personal_portfolio['portfolio']['stocks'].keys():
                 print(
-                    f"{stock} \t\t EUR \t\t {round(personal_portfolio['portfolio']['stocks'][stock]['price'] /1.04, 4)} \t\t {personal_portfolio['portfolio']['stocks'][stock]['quantity']}")
+                    f"{stock} \t\t EUR \t\t {round(personal_portfolio['portfolio']['stocks'][stock]['price'] /1.04, 4)} \t\t {personal_portfolio['portfolio']['stocks'][stock]['quantity']}\t\t {round(personal_portfolio['portfolio']['stocks'][stock]['quantity'] * round(personal_portfolio['portfolio']['stocks'][stock]['price'] /1.04, 4), 4)}")
 
 
     else:
         print(f"Portfolio displayed for user {user_name}:")
         print(f"Your Portfolio contains {len(personal_portfolio['portfolio']['stocks'])} stocks and your balance is €{personal_portfolio['portfolio']['balance']}!")
         if len(personal_portfolio['portfolio']['stocks']) > 0:
-            print('Stock \t\t Currency \t Price \t\t\t Quantity')
-            print('----------------------------------------------------------------------------')
+            print('Stock \t\t Currency \t Price \t\t\t Quantity \t Total Value')
+            print('------------------------------------------------------------------------------------------------------------------------------------')
             for stock in personal_portfolio['portfolio']['stocks'].keys():
-                print(f"{stock} \t\t USD \t\t {personal_portfolio['portfolio']['stocks'][stock]['price']} \t\t {personal_portfolio['portfolio']['stocks'][stock]['quantity']}")
+                print(f"{stock} \t\t USD \t\t {personal_portfolio['portfolio']['stocks'][stock]['price']} \t\t {personal_portfolio['portfolio']['stocks'][stock]['quantity']} \t\t {round(personal_portfolio['portfolio']['stocks'][stock]['quantity'] * personal_portfolio['portfolio']['stocks'][stock]['price'], 4)}")
 
 def add_money(user_name, portfolios, amount):
     """

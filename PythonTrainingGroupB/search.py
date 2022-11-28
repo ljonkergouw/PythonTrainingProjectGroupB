@@ -48,8 +48,7 @@ def display_price_chart(symbol, key):
         x = np.asarray(x, dtype='datetime64[s]')
         sns.lineplot(data=past_day, x=x, y="high")
 
-
-        plt.show()
+        #plt.show()
 
 
 if __name__ == "__main__":
