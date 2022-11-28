@@ -3,6 +3,7 @@ import csv
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 key = "EMFE4N5TBX48Y6W5"
 
 def search(search_input):
@@ -40,12 +41,14 @@ def display_price_chart(symbol, key):
         decoded_content = download.content.decode('utf-8')
         cr = csv.reader(decoded_content.splitlines(), delimiter=',')
         my_list = list(cr)
-        #for row in my_list:
-            #print(row)
 
         headers = my_list.pop(0)
-        df = pd.DataFrame(my_list, columns=headers).head(50)
-        sns.lineplot(data=df, x="time", y="high")
+        past_day = pd.DataFrame(my_list, columns=headers).head(96)
+        x = past_day['time']
+        x = np.asarray(x, dtype='datetime64[s]')
+        sns.lineplot(data=past_day, x=x, y="high")
+
+
         plt.show()
 
 
