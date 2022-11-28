@@ -5,7 +5,7 @@ def search(search_input):
     url = f'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={search_input}&apikey={key}'
     r = requests.get(url)
     data = r.json()
-    print(data)
+    print(f"Your search resulted in a total of {len(data['bestMatches'])} results")
     return data
 
 def print_search_results(results):
@@ -34,13 +34,12 @@ def display_price_chart(symbol, key):
     r = requests.get(url)
     data = r.json()
 
-    print(data)
+    print(data['Month'])
 
 
 if __name__ == "__main__":
     search_input = input("Please enter your search:")
     results = search(search_input)
-    print(f"Your search resulted in a total of {len(results)} results")
     print_search_results(results)
     second_search = input("Of which of these stocks would you like to know more information? Please provide the ticker")
     stock_info(second_search, key)
