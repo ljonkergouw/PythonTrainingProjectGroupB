@@ -46,7 +46,7 @@ def display_portfolio(user_name, portfolios):
         print('Europath')
 
         print(f"Portfolio displayed for user {user_name}:")
-        print(f"Your Portfolio contains {len(personal_portfolio['portfolio']['stocks'])} stocks and your balance is €{personal_portfolio['portfolio']['balance']}!")
+        print(f"Your Portfolio contains {len(personal_portfolio['portfolio']['stocks'])} stocks and your balance is €{round(personal_portfolio['portfolio']['balance'], 4)}!")
         if len(personal_portfolio['portfolio']['stocks']) > 0:
             print('Stock \t\t Currency \t Price \t\t\t Quantity')
             print('----------------------------------------------------------------------------')

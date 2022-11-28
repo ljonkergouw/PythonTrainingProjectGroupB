@@ -1,7 +1,7 @@
 from Portfolio import display_portfolio
 import pandas as pd
 import json
-from currency.py import get_currency
+from currencies import get_currency
 
 def buy_current_stock_price(company):
     from dateutil import parser
