@@ -1,4 +1,6 @@
 import json
+import requests
+key = "EMFE4N5TBX48Y6W5"
 
 def load_currencies(path):
     """"
@@ -42,5 +44,17 @@ def add_new_currency(path, currencies, username):
     currencies[username] = new_currency()
     with open(path, 'w') as fp:
         json.dump(currencies, fp)
+
+def get_currency(symbol, key):
+    url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={key}'
+    r = requests.get(url)
+    data = r.json()
+    return data['Currency']
+
+
+if __name__ == "__main__":
+    currency = get_currency("AAPL", key=key)
+    print(currency)
+
 
 
