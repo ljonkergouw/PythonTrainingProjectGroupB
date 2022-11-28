@@ -41,12 +41,12 @@ def login(accounts, currencies):
     choice = input("Please make your choice: ")
     while choice != "0" and choice != "1":
         choice = input("Enter 0 or 1: ")
-        if choice == '0':
-            login = new_login(accounts, currencies)
-            return login
-        elif choice == '1':
-            login = existing_login(accounts)
-            return login
+    if choice == '0':
+        login = new_login(accounts, currencies)
+        return login
+    elif choice == '1':
+        login = existing_login(accounts)
+        return login
 
 
 def new_login(accounts, currencies):
