@@ -13,18 +13,18 @@ def load_currencies(path):
 
 
 def new_currency():
+    """"
+    new_currency asks the user for its valuta.
+    """
+
     valuta = None
     print("Please enter the valuta used by your bank.")
     print("------------------------------------------")
-    user_input = int(input("\n 0: US Dollar \n 1: Euro \n 2: British Pound \n 3: Japanese Yen \n"))
+    user_input = int(input("\n 0: US Dollar \n 1: Euro \n"))
     if user_input == 0:
-        valuta = 'US Dollar'
+        valuta = 'USD'
     elif user_input == 1:
-        valuta = 'Euro'
-    elif user_input == 2:
-        valuta = 'British Pound'
-    elif user_input == 3:
-        valuta = 'Japanese Yen'
+        valuta = 'EUR'
     else:
         print("You entered invalid input")
     return valuta
