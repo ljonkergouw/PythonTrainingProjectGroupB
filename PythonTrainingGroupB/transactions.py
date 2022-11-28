@@ -4,10 +4,9 @@ import json
 from currencies import get_currency
 import requests
 from Portfolio import display_portfolio
+from dateutil import parser
 
 def buy_current_stock_price(company):
-    from dateutil import parser
-
     dt = datetime.now()
     dt = str(dt)
     dt[:19]
@@ -114,8 +113,6 @@ def buy_stock(user, portfolios):
 
 
 def sell_current_stock_price(company):
-    from dateutil import parser
-
     dt = datetime.now()
     dt = str(dt)
     dt[:19]
