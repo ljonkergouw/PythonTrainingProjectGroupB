@@ -1,4 +1,5 @@
 import requests
+import csv
 key = "EMFE4N5TBX48Y6W5"
 
 def search(search_input):
@@ -29,12 +30,20 @@ def stock_info(symbol, key):
 
 
 def display_price_chart(symbol, key):
-    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={symbol}&apikey={key}'
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol={symbol}&interval=15min&slice=year1month1&apikey={key}"
 
-    r = requests.get(url)
-    data = r.json()
+    with requests.Session() as s:
+        download = s.get(url)
+        decoded_content = download.content.decode('utf-8')
+        cr = csv.reader(decoded_content.splitlines(), delimiter=',')
+        my_list = list(cr)
+        #for row in my_list:
+            #print(row)
 
-    print(data['Month'])
+        print(my_list)
+
+
+
 
 
 if __name__ == "__main__":
