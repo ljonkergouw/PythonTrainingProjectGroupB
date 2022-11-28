@@ -24,9 +24,8 @@ def buy_current_stock_price(company):
     data = raw_data['Time Series (5min)']
     df = pd.DataFrame(data).T.apply(pd.to_numeric)
     df.index = pd.DatetimeIndex(df.index)
-
     idx = df.index[df.index.get_loc(dt, method='nearest')]
-    stock_price = float(data[str(idx)]['2. high'])
+    stock_price = round(float(data[str(idx)]['2. high']), 2)
 
     return stock_price
 
@@ -49,7 +48,7 @@ def buy_stock(user, portfolios):
         else:
             print("back to menu")
 
-    stock_price = float(buy_current_stock_price(company), 2)
+    stock_price = round(float(buy_current_stock_price(company)), 2)
     current_balance = portfolios['users'][user]['portfolio']['balance']
     currency = get_currency(company, "EMFE4N5TBX48Y6W5")
 
@@ -135,7 +134,7 @@ def sell_current_stock_price(company):
     df.index = pd.DatetimeIndex(df.index)
 
     idx = df.index[df.index.get_loc(dt, method='nearest')]
-    stock_price = float(data[str(idx)]['3. low'])
+    stock_price = round(float(data[str(idx)]['3. low']), 2)
 
     return stock_price
 
@@ -179,7 +178,7 @@ def sel_stock(user, portfolios):
 
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
-        stock_price = float(sell_current_stock_price(company), 2)
+        stock_price = round(float(sell_current_stock_price(company)), 2)
         current_balance = portfolios['users'][user]['portfolio']['balance']
         if currency == 'EUR':
             stock_price = stock_price / 1.04
