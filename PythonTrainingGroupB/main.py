@@ -99,7 +99,6 @@ if __name__ == "__main__":
     currencies = load_currencies("currencies.json")
     user_name = login(accounts, currencies)
     portfolios = load_portfolios("Portfolios.json")
-    print(user_name, portfolios)
     check_if_portfolio_exists(user_name, portfolios)
     investing_choice_menu(user_name, portfolios)
 

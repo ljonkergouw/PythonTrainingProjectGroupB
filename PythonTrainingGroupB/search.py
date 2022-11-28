@@ -1,11 +1,16 @@
 import requests
+import csv
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
 key = "EMFE4N5TBX48Y6W5"
 
 def search(search_input):
     url = f'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={search_input}&apikey={key}'
     r = requests.get(url)
     data = r.json()
-    print(data)
+    print(f"Your search resulted in a total of {len(data['bestMatches'])} results")
     return data
 
 def print_search_results(results):
@@ -29,18 +34,27 @@ def stock_info(symbol, key):
 
 
 def display_price_chart(symbol, key):
-    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol={symbol}&apikey={key}'
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol={symbol}&interval=15min&slice=year1month1&apikey={key}"
 
-    r = requests.get(url)
-    data = r.json()
+    with requests.Session() as s:
+        download = s.get(url)
+        decoded_content = download.content.decode('utf-8')
+        cr = csv.reader(decoded_content.splitlines(), delimiter=',')
+        my_list = list(cr)
 
-    print(data)
+        headers = my_list.pop(0)
+        past_day = pd.DataFrame(my_list, columns=headers).head(96)
+        x = past_day['time']
+        x = np.asarray(x, dtype='datetime64[s]')
+        sns.lineplot(data=past_day, x=x, y="high")
+
+
+        plt.show()
 
 
 if __name__ == "__main__":
     search_input = input("Please enter your search:")
     results = search(search_input)
-    print(f"Your search resulted in a total of {len(results)} results")
     print_search_results(results)
     second_search = input("Of which of these stocks would you like to know more information? Please provide the ticker")
     stock_info(second_search, key)
