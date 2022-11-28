@@ -24,11 +24,20 @@ def buy_stock(user, portfolios):
             buy_stock()
         else:
             print("back to menu")
-            #investing_choice_menu(user, portfolios)
+            print("\n")
 
     else:
         buy_quantity = float(input("how many shares do you want to purchase?"))
         print("\n")
+
+        if buy_quantity <= 0:
+            print("The amount you entered is invalid, please enter a valid number of shares.")
+            choice = input("Would you like to try again [y/n]")
+            if choice == 'y':
+                buy_stock(user, portfolios)
+            else:
+                print("back to menu")
+
 
         stock_price = float(current_stock_price(company))
         current_balance = portfolios['users'][user]['portfolio']['balance']
@@ -83,5 +92,7 @@ def buy_stock(user, portfolios):
                     buy_stock(user, portfolios)
                 else:
                     print("back to menu")
+                    print("\n")
+
 
     return portfolios

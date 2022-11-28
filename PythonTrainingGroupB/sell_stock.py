@@ -35,7 +35,6 @@ def sel_stock(user, portfolios):
         if choice == "n":
             print("you will return to the menu")
             print("\n")
-            #investing_choice_menu(user, portfolios)
 
     else:
 
@@ -45,8 +44,12 @@ def sel_stock(user, portfolios):
 
         if sell_quantity <= 0:
             print("The amount you entered is invalid, please enter a valid number of shares.")
-            print("Would you like to try again [y/n]")
-            sel_stock(user, portfolios)
+            choice = input("Would you like to try again [y/n]")
+            if choice == 'y':
+                sel_stock(user, portfolios)
+            else:
+                print("back to menu")
+
 
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
@@ -67,7 +70,7 @@ def sel_stock(user, portfolios):
             if choice == "n":
                 print("you will return to the menu")
                 print("\n")
-                # koppeling maken naar menu
+
 
         if sell_quantity <= current_quantity:
             print(
@@ -106,5 +109,9 @@ def sel_stock(user, portfolios):
                 if choice == "n":
                     print("you will return to the menu")
                     print("\n")
+
+
+
+
 
     return portfolios
