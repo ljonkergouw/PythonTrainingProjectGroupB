@@ -39,76 +39,97 @@ def buy_stock(user, portfolios):
     company = input("Please enter the company ticker: ")
     print("\n")
 
-    buy_quantity = float(input("How many shares do you want to purchase? "))
-    print("\n")
+    table1 = pd.read_html('https://www.dividendmax.com/market-index-constituents/aex-25')
+    table2 = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
+    table3 = pd.read_html('https://www.dividendmax.com/market-index-constituents/dax-40')
 
-    if buy_quantity <= 0:
-        print("The amount you entered is invalid, please enter a valid number of shares.")
-        choice = input("Would you like to try again [y/n]: ")
+    df1 = table1[0]
+    df2 = table2[0]
+    df3 = table3[0]
+
+    AEX = list(df1.Ticker)
+    SP500 = list(df2.Symbol)
+    DAX = list(df3.Ticker)
+
+    if company not in AEX or SP500 or DAX:
+        print(f"We currently do not support any transactions of {company}, we only support transaction of companies listed on the DAX, S&P500 & AEX")
+        choice = input("Do you want to make another transation? [y/n]")
         if choice == 'y':
             buy_stock(user, portfolios)
         else:
-            print("Back to menu.")
-
-    stock_price = round(float(buy_current_stock_price(company)), 2)
-    current_balance = portfolios['users'][user]['portfolio']['balance']
-    currency = get_currency(company, "EMFE4N5TBX48Y6W5")
-
-    if currency == 'EUR':
-        stock_price = stock_price / 1.04
+            print("Returning to menu")
     else:
 
-        if current_balance - (stock_price * buy_quantity) < 0:
-            print(
-                f"Your funds are insufficient. In order to complete this transaction, please increase your balance by {abs(current_balance - (stock_price * buy_quantity))}")
-            choice = input("Do you want to make a deposit [y/n]? ")
+        buy_quantity = float(input("How many shares do you want to purchase? "))
+        print("\n")
+
+        if buy_quantity <= 0:
+            print("The amount you entered is invalid, please enter a valid number of shares.")
+            choice = input("Would you like to try again [y/n]: ")
             if choice == 'y':
-                print("Go make a deposit.")
-            if choice == 'n':
-                print("Go to menu.")
+                buy_stock(user, portfolios)
+            else:
+                print("Back to menu.")
+
+        stock_price = round(float(buy_current_stock_price(company)), 2)
+        current_balance = portfolios['users'][user]['portfolio']['balance']
+        currency = get_currency(company, "EMFE4N5TBX48Y6W5")
+
+        if currency == 'EUR':
+            stock_price = stock_price / 1.04
         else:
-            print(
-                f"Are you sure you want to buy {buy_quantity} of {company} for a total amount of {buy_quantity * stock_price}?")
-            choice = input("Please enter [y/n]: ")
-            print("\n")
-            if choice == 'n':
-                print("Ending: back to menu.")
-                print("\n")
-            if choice == 'y':
-                new_balance = portfolios['users'][user]['portfolio']['balance'] - (buy_quantity * stock_price)
 
-                # check if stock is already in portfolio
-                if company in portfolios['users'][user]['portfolio']['stocks']:
-                    portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] += buy_quantity
-                else:
-                    portfolios['users'][user]['portfolio']['stocks'][company] = {'quantity': buy_quantity,
-                                                                                 'price': stock_price}
-
-                # updating current balance and stock qty in portfolio
-                portfolios['users'][user]['portfolio']['balance'] -= new_balance
-
-                with open("Portfolios.json", 'w') as fp:
-                    json.dump(portfolios, fp)
-
-                # transaction receipt
-                print("Transaction completed.")
-                print("---------------------------------------------")
-                print(f"Shares bought: {buy_quantity}")
-                print(f"Company: {company}")
-                print(f"Total amount: {stock_price * buy_quantity}")
-                print(f"Currency: EUR")  # here the currency needs to be added
-                print("\n")
-
-                # current portfolio
-                print("Portfolio after transaction: ")
-                display_portfolio(user, portfolios)
-
-                choice = input("Do you want to continue [y/n]? ")
+            if current_balance - (stock_price * buy_quantity) < 0:
+                print(
+                    f"Your funds are insufficient. In order to complete this transaction, please increase your balance by {abs(current_balance - (stock_price * buy_quantity))}")
+                choice = input("Do you want to make a deposit [y/n]? ")
                 if choice == 'y':
-                    buy_stock(user, portfolios)
-                else:
-                    print("Back to menu.")
+                    print("Go make a deposit.")
+                if choice == 'n':
+                    print("Go to menu.")
+            else:
+                print(
+                    f"Are you sure you want to buy {buy_quantity} of {company} for a total amount of {buy_quantity * stock_price}?")
+                choice = input("Please enter [y/n]: ")
+                print("\n")
+                if choice == 'n':
+                    print("Ending: back to menu.")
                     print("\n")
+                if choice == 'y':
+                    new_balance = portfolios['users'][user]['portfolio']['balance'] - (buy_quantity * stock_price)
+
+                    # check if stock is already in portfolio
+                    if company in portfolios['users'][user]['portfolio']['stocks']:
+                        portfolios['users'][user]['portfolio']['stocks'][company]['quantity'] += buy_quantity
+                    else:
+                        portfolios['users'][user]['portfolio']['stocks'][company] = {'quantity': buy_quantity,
+                                                                                     'price': stock_price}
+
+                    # updating current balance and stock qty in portfolio
+                    portfolios['users'][user]['portfolio']['balance'] -= new_balance
+
+                    with open("Portfolios.json", 'w') as fp:
+                        json.dump(portfolios, fp)
+
+                    # transaction receipt
+                    print("Transaction completed.")
+                    print("---------------------------------------------")
+                    print(f"Shares bought: {buy_quantity}")
+                    print(f"Company: {company}")
+                    print(f"Total amount: {stock_price * buy_quantity}")
+                    print(f"Currency: EUR")  # here the currency needs to be added
+                    print("\n")
+
+                    # current portfolio
+                    print("Portfolio after transaction: ")
+                    display_portfolio(user, portfolios)
+
+                    choice = input("Do you want to continue [y/n]? ")
+                    if choice == 'y':
+                        buy_stock(user, portfolios)
+                    else:
+                        print("Back to menu.")
+                        print("\n")
 
 
     return portfolios
