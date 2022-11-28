@@ -1,5 +1,7 @@
 import requests
 import csv
+import pandas as pd
+import finplot as fplt
 key = "EMFE4N5TBX48Y6W5"
 
 def search(search_input):
@@ -40,9 +42,9 @@ def display_price_chart(symbol, key):
         #for row in my_list:
             #print(row)
 
-        print(my_list)
-
-
+        headers = my_list.pop(0)
+        df = pd.DataFrame(my_list, columns=headers)
+        fplt.candlestick_ochl(df[['time','open','close','high','low']])
 
 
 
