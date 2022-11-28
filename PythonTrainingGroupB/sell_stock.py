@@ -50,10 +50,9 @@ def sel_stock(user, portfolios):
             else:
                 print("back to menu")
 
-
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
-        stock_price = 150  # current_stock_price(company)
+        stock_price = current_stock_price(company)
         current_balance = portfolios['users'][user]['portfolio']['balance']
 
         if sell_quantity > current_quantity:
@@ -70,7 +69,6 @@ def sel_stock(user, portfolios):
             if choice == "n":
                 print("you will return to the menu")
                 print("\n")
-
 
         if sell_quantity <= current_quantity:
             print(
@@ -109,9 +107,5 @@ def sel_stock(user, portfolios):
                 if choice == "n":
                     print("you will return to the menu")
                     print("\n")
-
-
-
-
 
     return portfolios
