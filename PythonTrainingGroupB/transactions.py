@@ -207,11 +207,10 @@ def sel_stock(user, portfolios):
             # vars to make code more readable
         current_quantity = portfolios['users'][user]['portfolio']['stocks'][company]['quantity']
 
-        current_balance = portfolios['users'][user]['portfolio']['balance']
         stock_price = round(float(sell_current_stock_price(company)), 4)
         currency = get_currency(company, "EMFE4N5TBX48Y6W5")
         if currency == 'EUR':
-            pass
+            stock_price /= 1.04
         else:
             if sell_quantity > current_quantity:
                 print(
